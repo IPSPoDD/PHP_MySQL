@@ -1,0 +1,7 @@
+<form method="post" action="/handle.php">
+    <input type="text" placeholder="Log in" name="login">
+    <input type="text" placeholder="Password" name="password">
+    <hr>
+    <input type="submit" value="send">
+
+</form>
