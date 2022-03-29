@@ -1,0 +1,41 @@
+<?php
+$connection = mysqli_connect('127.0.0.1','root', '','test_db');
+
+if($connection == false){
+    echo "Didn't connect<br>";
+    echo mysqli_connect_error();
+    exit();
+}
+echo "Connected with DB <br>";
+
+$result = mysqli_query($connection, "select * from article_categories");
+
+//$r1 = mysqli_fetch_assoc($result);
+//print_r($r1);
+//while (($record = mysqli_fetch_assoc($result))){
+//    print_r($result);
+//    echo '<br>';
+//};
+
+if (mysqli_num_rows($result) == 0){
+    echo 'There is no any row <br>';
+}else
+{?>
+    
+<ul>
+    <?php
+        while(($cat = mysqli_fetch_assoc($result))){
+            $articles_count = mysqli_query($connection,"SELECT COUNT (id) AS total_count FROM articles WHERE categorie_id =" .
+            $cat['id']);
+            $articles_count_result = mysqli_fetch_assoc($articles_count); // Warning: mysqli_fetch_assoc() expects parameter 1 to be mysqli_result, boolean given in
+            echo '<li>'.$cat['title'] . '(' . $articles_count_result['total_count'] . ') </li>';
+        }
+    ?>
+</ul>
+<?php
+}
+?>
+
+<?php
+mysqli_close($connection);
+?>
